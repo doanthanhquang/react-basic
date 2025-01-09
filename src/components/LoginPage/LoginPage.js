@@ -15,6 +15,7 @@ const LoginPage = () => {
 
   const [errorUsername, setErrorUsername] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const checkValidatePassword = (password) => {
     const validatePassword = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,18}$/;
@@ -47,10 +48,12 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const form = e.target;
     const formData = new FormData(form);
     const username = formData.get("username");
     const password = formData.get("password");
+
     checkValidateUsername(username);
     checkValidatePassword(password);
 
@@ -67,6 +70,7 @@ const LoginPage = () => {
       } catch (err) {
         toast.error(err.message);
       } finally {
+        setLoading(false);
       }
     }
   };
@@ -103,7 +107,7 @@ const LoginPage = () => {
           <div className={styles["forgot-password"]} onClick={forgotPassword}>
             Forgot password?
           </div>
-          <button type="submit" className={styles["login-button"]}>
+          <button type="submit" className={styles["login-button"]} disabled={loading}>
             LOGIN
           </button>
         </form>
