@@ -1,0 +1,122 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Poppins-Bold', sans-serif;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+}
+
+.login-container {
+  background: #fff;
+  border-radius: 12px;
+  width: 350px;
+  padding: 40px 60px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333;
+  }
+
+  .input-group {
+    width: 100%;
+    margin-top: 30px;
+    text-align: left;
+    border-bottom: 2px solid #b7b1b1d5;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #666;
+    }
+    .input {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 10px;
+      i {
+        color: #b7b1b1d5;
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        background: transparent;
+        border: 0;
+        outline: 0;
+        font-size: 14px;
+      }
+      
+      ::placeholder {
+        color: #b7b1b1d5;
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .forgot-password {
+    text-align: right;
+    font-size: 14px;
+    color: #212529;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
+
+  .login-button {
+    width: 100%;
+    background: linear-gradient(135deg, #91a9f8, #da41c6);
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .social-login {
+    margin-top: 50px;
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+      margin-bottom: 150px;
+      .icon {
+        &:hover {
+          opacity: 0.8;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .signup-link {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+  }
+}
