@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import styles from "./LoginPage.module.scss";
+import { useNavigate } from "react-router-dom";
 import { ReactComponent as FaceBookIcon } from "../../assets/svg/facebook.svg";
 import { ReactComponent as GoogleIcon } from "../../assets/svg/google.svg";
 import { ReactComponent as TwitterIcon } from "../../assets/svg/twitter.svg";
 
 const LoginPage = () => {
+  const navigate = useNavigate(); 
   const [errorUsername, setErrorUsername] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
 
@@ -48,8 +50,17 @@ const LoginPage = () => {
 
     if (username && password && !checkValidateUsername(username) && !checkValidatePassword(password)) {
       console.log("Login success");
+      navigate('/dashboard')
     }
   };
+
+  const signUp = () => {
+    navigate('/sign-up')
+  }
+
+  const forgotPassword = () => {
+    navigate('/forgot-password')
+  }
 
   return (
     <div className={styles["login-page"]}>
@@ -59,7 +70,7 @@ const LoginPage = () => {
           <div className={styles["input-group"]}>
             <label>Username</label>
             <div className={styles["input"]}>
-              <i class="fa-regular fa-user" />
+              <i className="fa-regular fa-user" />
               <input type="email" required placeholder="Type your username" name="username" />
             </div>
           </div>
@@ -67,12 +78,12 @@ const LoginPage = () => {
           <div className={styles["input-group"]}>
             <label>Password</label>
             <div className={styles["input"]}>
-              <i class="fa-solid fa-lock"></i>
+              <i className="fa-solid fa-lock"></i>
               <input type="password" required placeholder="Type your password" name="password" />
             </div>
           </div>
           {errorPassword && <div className={styles["error-message"]}>{errorPassword}</div>}
-          <div className={styles["forgot-password"]}>Forgot password?</div>
+          <div className={styles["forgot-password"]} onClick={forgotPassword}>Forgot password?</div>
           <button type="submit" className={styles["login-button"]}>
             LOGIN
           </button>
@@ -86,7 +97,7 @@ const LoginPage = () => {
           </div>
           <p>Or Sign Up Using</p>
         </div>
-        <div className={styles["signup-link"]}>SIGN UP</div>
+        <div className={styles["signup-link"]} onClick={signUp}>SIGN UP</div>
       </div>
     </div>
   );
