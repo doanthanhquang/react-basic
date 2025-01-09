@@ -3,15 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as FaceBookIcon } from "../../assets/svg/facebook.svg";
 import { ReactComponent as GoogleIcon } from "../../assets/svg/google.svg";
 import { ReactComponent as TwitterIcon } from "../../assets/svg/twitter.svg";
-import { useDispatch } from 'react-redux';
-import { setUser } from '../../actions';
-import { toast } from 'react-toastify';
+import { useDispatch } from "react-redux";
+import { setUser } from "../../actions";
+import { toast } from "react-toastify";
 import styles from "./LoginPage.module.scss";
-import axios from 'axios';
-
+import axios from "axios";
 
 const LoginPage = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [errorUsername, setErrorUsername] = useState("");
@@ -44,40 +43,41 @@ const LoginPage = () => {
       setErrorUsername("");
       return false;
     }
-  }
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const formData = new FormData(form)
-    const username = formData.get("username")
-    const password = formData.get("password")
-    checkValidateUsername(username)
-    checkValidatePassword(password)
+    const formData = new FormData(form);
+    const username = formData.get("username");
+    const password = formData.get("password");
+    checkValidateUsername(username);
+    checkValidatePassword(password);
 
     if (username && password && !checkValidateUsername(username) && !checkValidatePassword(password)) {
       try {
-        const response = await axios.get('https://mocki.io/v1/d1eaa245-a9c4-4c5f-9257-c2815d9385f7');
+        const response = await axios.get("https://mocki.io/v1/d1eaa245-a9c4-4c5f-9257-c2815d9385f7");
 
         const userData = response.data;
 
-        navigate('/dashboard')
-        toast.success('Login successful!');
+        navigate("/dashboard");
+        toast.success("Login successful!");
 
         dispatch(setUser(userData));
       } catch (err) {
         toast.error(err.message);
-      } finally {}
+      } finally {
+      }
     }
   };
 
   const signUp = () => {
-    navigate('/sign-up')
-  }
+    navigate("/sign-up");
+  };
 
   const forgotPassword = () => {
-    navigate('/forgot-password')
-  }
+    navigate("/forgot-password");
+  };
 
   return (
     <div className={styles["login-page"]}>
@@ -100,7 +100,9 @@ const LoginPage = () => {
             </div>
           </div>
           {errorPassword && <div className={styles["error-message"]}>{errorPassword}</div>}
-          <div className={styles["forgot-password"]} onClick={forgotPassword}>Forgot password?</div>
+          <div className={styles["forgot-password"]} onClick={forgotPassword}>
+            Forgot password?
+          </div>
           <button type="submit" className={styles["login-button"]}>
             LOGIN
           </button>
@@ -114,7 +116,9 @@ const LoginPage = () => {
           </div>
           <p>Or Sign Up Using</p>
         </div>
-        <div className={styles["signup-link"]} onClick={signUp}>SIGN UP</div>
+        <div className={styles["signup-link"]} onClick={signUp}>
+          SIGN UP
+        </div>
       </div>
     </div>
   );
