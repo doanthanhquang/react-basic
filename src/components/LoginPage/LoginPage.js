@@ -5,20 +5,21 @@ import { ReactComponent as GoogleIcon } from "../../assets/svg/google.svg";
 import { ReactComponent as TwitterIcon } from "../../assets/svg/twitter.svg";
 
 const LoginPage = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [errorUsername, setErrorUsername] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
 
   const checkValidatePassword = (password) => {
     const validatePassword = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,18}$/;
-    console.log(password)
+
     if (!password) {
       setErrorPassword("Password is required");
+      return true;
     } else if (!validatePassword.test(password)) {
       setErrorPassword("Password must be 6-18 characters long, include at least 1 uppercase letter and 1 special character");
+      return true;
     } else {
       setErrorPassword("");
+      return false;
     }
   };
 
@@ -26,19 +27,28 @@ const LoginPage = () => {
     const validateEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     if (!username) {
       setErrorUsername("Username is required");
+      return true;
     } else if (!validateEmail.test(username)) {
       setErrorUsername("Please enter a valid email address");
+      return true;
     } else {
       setErrorUsername("");
+      return false;
     }
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    checkValidateUsername(username);
-    checkValidatePassword(password);
+    const form = e.target;
+    const formData = new FormData(form)
+    const username = formData.get("username")
+    const password = formData.get("password")
+    checkValidateUsername(username)
+    checkValidatePassword(password)
 
-    console.log(username, password);
+    if (username && password && !checkValidateUsername(username) && !checkValidatePassword(password)) {
+      console.log("Login success");
+    }
   };
 
   return (
@@ -50,7 +60,7 @@ const LoginPage = () => {
             <label>Username</label>
             <div className={styles["input"]}>
               <i class="fa-regular fa-user" />
-              <input type="email" required placeholder="Type your username" value={username} onChange={(e) => setUsername(e.target.value)} />
+              <input type="email" required placeholder="Type your username" name="username" />
             </div>
           </div>
           {errorUsername && <div className={styles["error-message"]}>{errorUsername}</div>}
@@ -58,7 +68,7 @@ const LoginPage = () => {
             <label>Password</label>
             <div className={styles["input"]}>
               <i class="fa-solid fa-lock"></i>
-              <input type="password" required placeholder="Type your password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              <input type="password" required placeholder="Type your password" name="password" />
             </div>
           </div>
           {errorPassword && <div className={styles["error-message"]}>{errorPassword}</div>}
