@@ -1,12 +1,19 @@
 import React, { useState } from "react";
-import styles from "./LoginPage.module.scss";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as FaceBookIcon } from "../../assets/svg/facebook.svg";
 import { ReactComponent as GoogleIcon } from "../../assets/svg/google.svg";
 import { ReactComponent as TwitterIcon } from "../../assets/svg/twitter.svg";
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../actions';
+import { toast } from 'react-toastify';
+import styles from "./LoginPage.module.scss";
+import axios from 'axios';
+
 
 const LoginPage = () => {
   const navigate = useNavigate(); 
+  const dispatch = useDispatch();
+
   const [errorUsername, setErrorUsername] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
 
@@ -39,7 +46,7 @@ const LoginPage = () => {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form)
@@ -49,8 +56,18 @@ const LoginPage = () => {
     checkValidatePassword(password)
 
     if (username && password && !checkValidateUsername(username) && !checkValidatePassword(password)) {
-      console.log("Login success");
-      navigate('/dashboard')
+      try {
+        const response = await axios.get('https://mocki.io/v1/d1eaa245-a9c4-4c5f-9257-c2815d9385f7');
+
+        const userData = response.data;
+
+        navigate('/dashboard')
+        toast.success('Login successful!');
+
+        dispatch(setUser(userData));
+      } catch (err) {
+        toast.error(err.message);
+      } finally {}
     }
   };
 
@@ -66,7 +83,7 @@ const LoginPage = () => {
     <div className={styles["login-page"]}>
       <div className={styles["login-container"]}>
         <h2>Login</h2>
-        <form onSubmit={handleSubmit} noValidate>
+        <form onSubmit={handleLogin} noValidate>
           <div className={styles["input-group"]}>
             <label>Username</label>
             <div className={styles["input"]}>
