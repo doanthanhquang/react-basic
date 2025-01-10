@@ -16,6 +16,8 @@ const LoginPage = () => {
   const [errorUsername, setErrorUsername] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState('');
 
   const checkValidatePassword = (password) => {
     const validatePassword = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,18}$/;
@@ -83,6 +85,14 @@ const LoginPage = () => {
     navigate("/forgot-password");
   };
 
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
   return (
     <div className={styles["login-page"]}>
       <div className={styles["login-container"]}>
@@ -92,7 +102,7 @@ const LoginPage = () => {
             <label>Username</label>
             <div className={styles["input"]}>
               <i className="fa-regular fa-user" />
-              <input type="email" required placeholder="Type your username" name="username" />
+              <input type="email" placeholder="Type your username" name="username" />
             </div>
           </div>
           {errorUsername && <div className={styles["error-message"]}>{errorUsername}</div>}
@@ -100,7 +110,8 @@ const LoginPage = () => {
             <label>Password</label>
             <div className={styles["input"]}>
               <i className="fa-solid fa-lock"></i>
-              <input type="password" required placeholder="Type your password" name="password" />
+              <input type={showPassword ? "text" : "password"} placeholder="Type your password" name="password" onChange={handlePasswordChange} />
+              {password && <i className={`fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"} ${styles["show-password"]}`} onClick={handleShowPassword}></i>}
             </div>
           </div>
           {errorPassword && <div className={styles["error-message"]}>{errorPassword}</div>}
