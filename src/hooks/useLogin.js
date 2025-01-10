@@ -55,7 +55,7 @@ const useLogin = () => {
 
     if (username && password && !checkValidateUsername(username) && !checkValidatePassword(password)) {
       axios
-        .get("https://mocki.io/v1/d1eaa245-a9c4-4c5f-9257-c2815d9385f76")
+        .get("https://mocki.io/v1/d1eaa245-a9c4-4c5f-9257-c2815d9385f7")
         .then((response) => {
           const userData = response.data;
           navigate("/dashboard");
