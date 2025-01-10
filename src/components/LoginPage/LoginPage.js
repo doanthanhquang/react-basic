@@ -17,7 +17,7 @@ const LoginPage = () => {
   const [errorPassword, setErrorPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
 
   const checkValidatePassword = (password) => {
     const validatePassword = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,18}$/;
@@ -60,20 +60,20 @@ const LoginPage = () => {
     checkValidatePassword(password);
 
     if (username && password && !checkValidateUsername(username) && !checkValidatePassword(password)) {
-      try {
-        const response = await axios.get("https://mocki.io/v1/d1eaa245-a9c4-4c5f-9257-c2815d9385f7");
-
-        const userData = response.data;
-
-        navigate("/dashboard");
-        toast.success("Login successful!");
-
-        dispatch(setUser(userData));
-      } catch (err) {
-        toast.error(err.message);
-      } finally {
-        setLoading(false);
-      }
+      axios
+        .get("https://mocki.io/v1/d1eaa245-a9c4-4c5f-9257-c2815d9385f76")
+        .then((response) => {
+          const userData = response.data;
+          navigate("/dashboard");
+          toast.success("Login successful!");
+          dispatch(setUser(userData));
+        })
+        .catch((response) => {
+          toast.error(response.message);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   };
 
