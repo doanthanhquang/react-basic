@@ -68,6 +68,8 @@ const useLogin = () => {
         .finally(() => {
           setLoading(false);
         });
+    } else {
+      setLoading(false);
     }
   };
 
